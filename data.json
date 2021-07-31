@@ -1,0 +1,22 @@
+[
+    {
+        "ID": 1,
+        "user_input": "Take your dog out for a walk.",
+        "time": "20:29, 31/07/2021"
+    },
+    {
+        "ID": 2,
+        "user_input": "Go to the market.",
+        "time": "20:42, 31/07/2021"
+    },
+    {
+        "ID": 3,
+        "time": "08:38, 31/07/2021",
+        "user_input": "Take your dog out for a walk."
+    },
+    {
+        "ID": 4,
+        "time": "08:39, 31/07/2021",
+        "user_input": "Take your dog out for a walk."
+    }
+]
