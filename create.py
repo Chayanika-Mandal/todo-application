@@ -17,11 +17,18 @@ from datetime import datetime
 def add_todo(user_input):
     with open("data.json", "r") as data:
         json_data = json.load(data)
-        new_id = json_data[-1]["ID"] + 1
-        current_time = datetime.now().strftime(r"%H:%M, %d/%m/%Y")
-        new_todo = {"ID": new_id, "time": current_time,
-                    "user_input": user_input}
-        json_data.append(new_todo)
+        for index, todo in enumerate(json_data):
+            if user_input == todo:
+                print("This todo already exists.")
+            else:
+                if json_data != []:
+                    new_id = json_data[-1]["ID"] + 1
+                else:
+                    new_id = 1
+                current_time = datetime.now().strftime(r"%H:%M, %d/%m/%Y")
+                new_todo = {"ID": new_id, "time": current_time,
+                            "user_input": user_input}
+                json_data.append(new_todo)
 
     with open("data.json", "w") as data:
         json.dump(json_data, data, indent=4)
