@@ -1,11 +1,16 @@
 # python main.py list_all
-import utilities
+
+
+from utilities import load_data
 
 
 def list_all():
-    json_data = utilities.load_data()
-    for todo in json_data:
-        print(f"ID: {todo['ID']}\nTODO: {todo['user_input']}\nTIME: {todo['time']}\n")
-
-
-list_all()
+    json_data = load_data()
+    if json_data == []:
+        print("Your todo list is empty")
+    else:
+        for todo in json_data:
+            print(f"ID: {todo['ID']}")
+            print(f"TODO: {todo['user_input']}")
+            print(f"TIME: {todo['time']}")
+            print()

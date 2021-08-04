@@ -1,10 +1,15 @@
 import json
+from json.decoder import JSONDecodeError
 
 
 def load_data():
-    """This function is supposed to return the data from the data.json file as a python object."""
+    """This function is supposed to return the data from the data.json file as
+    a python object."""
     with open("data.json", "r") as data:
-        json_data = json.load(data)
+        try:
+            json_data = json.load(data)
+        except JSONDecodeError:
+            json_data = []
     return json_data
 
 

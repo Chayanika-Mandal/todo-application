@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
-from json.decoder import JSONDecodeError
+
+from utilities import load_data
 
 # Json has four important functions: json.load, json.loads, json.dump,
 # json.dumps First of all, you have to store the user's input. Secondly, the
@@ -18,28 +19,25 @@ from json.decoder import JSONDecodeError
 
 
 def add_todo(user_input):
-    with open("data.json", "r") as data:
-        try:
-            json_data = json.load(data)
-        except JSONDecodeError:
-            json_data = []
-            new_id = 1
-        for index, todo in enumerate(json_data):
+    json_data = load_data()
+    if json_data == []:
+        new_id = 1
+    else:
+        for todo in json_data:
             if user_input == todo["user_input"]:
                 print("This todo already exists.")
                 return
             else:
                 new_id = json_data[-1]["ID"] + 1
-        current_time = datetime.now().strftime(r"%H:%M, %d/%m/%Y")
-        new_todo = {
-            "ID": new_id,
-            "time": current_time,
-            "user_input": user_input,
-        }
-        json_data.append(new_todo)
+    current_time = datetime.now().strftime(r"%H:%M, %d/%m/%Y")
+    new_todo = {
+        "ID": new_id,
+        "time": current_time,
+        "user_input": user_input,
+    }
+    json_data.append(new_todo)
 
     with open("data.json", "w") as data:
         json.dump(json_data, data, indent=4)
 
-
-add_todo("take the dog out for a walk")
+    print("Your todo was stored successfully")
