@@ -1,18 +1,12 @@
 # python main.py remove <ID>
 
 
-from utilities import dump_data, load_data
+from utilities import TodoDatabaseConnector, delete_todo_by_id
 
 
-def remove_todo(ID):
-    json_data = load_data()
-    found = False
-    for todo in json_data:
-        if todo["ID"] == ID:
-            json_data.remove(todo)
-            found = True
-    if found:
-        dump_data(json_data)
-        print("Your Todo has been successfully removed.")
+def remove_todo(todo_database_connector: TodoDatabaseConnector, ID):
+    cursor = todo_database_connector.execute_query(delete_todo_by_id(), (ID,))
+    if cursor.rowcount == 1:
+        print("Your todo has been successfully removed.")
     else:
         print("The ID provided by the user does not exist.")

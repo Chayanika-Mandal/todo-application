@@ -1,7 +1,6 @@
-import json
 from datetime import datetime
 
-from utilities import load_data
+from utilities import TodoDatabaseConnector, insert_todo
 
 # Json has four important functions: json.load, json.loads, json.dump,
 # json.dumps First of all, you have to store the user's input. Secondly, the
@@ -18,26 +17,8 @@ from utilities import load_data
 # arguments.
 
 
-def add_todo(user_input):
-    json_data = load_data()
-    if json_data == []:
-        new_id = 1
-    else:
-        for todo in json_data:
-            if user_input == todo["user_input"]:
-                print("This todo already exists.")
-                return
-            else:
-                new_id = json_data[-1]["ID"] + 1
-    current_time = datetime.now().strftime(r"%H:%M, %d/%m/%Y")
-    new_todo = {
-        "ID": new_id,
-        "time": current_time,
-        "user_input": user_input,
-    }
-    json_data.append(new_todo)
-
-    with open("data.json", "w") as data:
-        json.dump(json_data, data, indent=4)
-
+def add_todo(todo_database_connector: TodoDatabaseConnector, user_input: str):
+    current_time = datetime.now()
+    data_tuple = (user_input, current_time)
+    todo_database_connector.execute_query(insert_todo(), data_tuple)
     print("Your todo was stored successfully")

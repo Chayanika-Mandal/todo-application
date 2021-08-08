@@ -66,3 +66,9 @@ SELECT * FROM movies;
 """
 
 pprint.pprint(execute_read_query(connection, get_all_movies))
+
+get_last_movie = """
+SELECT * from movies ORDER BY id DESC LIMIT 1;
+"""
+
+pprint.pprint(execute_read_query(connection, get_last_movie))
