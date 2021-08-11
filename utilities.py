@@ -1,11 +1,12 @@
 import sqlite3
 from sqlite3 import Error
+from sqlite3.dbapi2 import PARSE_DECLTYPES
 
 
 def create_connection(path):
     connection = None
     try:
-        connection = sqlite3.connect(path)
+        connection = sqlite3.connect(path, detect_types=PARSE_DECLTYPES)
     except Error as e:
         print(f"The error '{e}' occurred")
     return connection
@@ -19,12 +20,9 @@ class TodoDatabaseConnector:
 
     def execute_query(self, query, data_tuple=tuple()):
         cursor = self.connection.cursor()
-        try:
-            cursor.execute(query, data_tuple)
-            self.connection.commit()
-            return cursor
-        except Error as e:
-            print(f"The error '{e}' occurred")
+        cursor.execute(query, data_tuple)
+        self.connection.commit()
+        return cursor
 
     def execute_read_query(self, query, data_tuple=tuple()):
         cursor = self.connection.cursor()

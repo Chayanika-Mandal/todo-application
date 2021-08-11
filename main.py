@@ -1,6 +1,7 @@
 import sys
-from edit import edit_todo
+
 from create import add_todo
+from edit import edit_todo
 from list_all import list_all
 from remove import remove_todo
 from utilities import TodoDatabaseConnector
@@ -14,7 +15,7 @@ todo_database_connector = TodoDatabaseConnector("todo.db")
 create_todo_schema = """
 CREATE TABLE IF NOT EXISTS 'todos' (
     todo_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_input TEXT NOT NULL,
+    user_input TEXT NOT NULL UNIQUE,
     time TIMESTAMP NOT NULL
 );
 """

@@ -1,4 +1,5 @@
 from datetime import datetime
+from sqlite3.dbapi2 import IntegrityError
 
 from utilities import TodoDatabaseConnector, insert_todo
 
@@ -20,5 +21,9 @@ from utilities import TodoDatabaseConnector, insert_todo
 def add_todo(todo_database_connector: TodoDatabaseConnector, user_input: str):
     current_time = datetime.now()
     data_tuple = (user_input, current_time)
-    todo_database_connector.execute_query(insert_todo(), data_tuple)
+    try:
+        todo_database_connector.execute_query(insert_todo(), data_tuple)
+    except IntegrityError:
+        print("This todo already exists")
+        return
     print("Your todo was stored successfully")
