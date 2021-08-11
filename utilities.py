@@ -26,11 +26,11 @@ class TodoDatabaseConnector:
         except Error as e:
             print(f"The error '{e}' occurred")
 
-    def execute_read_query(self, query):
+    def execute_read_query(self, query, data_tuple=tuple()):
         cursor = self.connection.cursor()
         result = None
         try:
-            cursor.execute(query)
+            cursor.execute(query, data_tuple)
             result = cursor.fetchall()
             return result
         except Error as e:
@@ -65,5 +65,19 @@ def get_all_todos():
 def delete_todo_by_id():
     query = """
     DELETE FROM 'todos' WHERE todo_id = ?;
+    """
+    return query
+
+
+def edit_todo_by_id():
+    query = """
+    UPDATE 'todos' SET user_input = ? WHERE todo_id = ?;
+    """
+    return query
+
+
+def get_one_todo():
+    query = """
+    SELECT user_input FROM 'todos' WHERE todo_id = ?;
     """
     return query

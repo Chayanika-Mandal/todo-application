@@ -1,5 +1,5 @@
 import sys
-
+from edit import edit_todo
 from create import add_todo
 from list_all import list_all
 from remove import remove_todo
@@ -27,3 +27,5 @@ if action == "list_all":
     list_all(todo_database_connector)
 elif action == "create":
     add_todo(todo_database_connector, sys.argv[2])
+if action == "edit":
+    edit_todo(todo_database_connector, int(sys.argv[2]))
